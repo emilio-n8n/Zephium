@@ -196,6 +196,10 @@ Edge.
 | -------- | ------------ | --------- | -------- |
 | macOS | Apple Silicon | [`Zephium-macOS-arm64.dmg`](https://github.com/zephium-browser/Zephium/releases/latest/download/Zephium-macOS-arm64.dmg) | macOS Sonoma 14 or later |
 | Windows | x64 | [`Zephium-Windows-x64-setup.exe`](https://github.com/zephium-browser/Zephium/releases/latest/download/Zephium-Windows-x64-setup.exe) | Windows 10 or 11 |
+| Linux (this fork) | x64 | `.deb` and portable `.tar.gz` from the [Linux workflow](.github/workflows/linux.yml) | WebKitGTK 4.1 2.54 or later |
+
+Linux Browse is enabled on this branch; see [docs/linux.md](docs/linux.md)
+for the package layout, feature matrix and build steps.
 
 Windows builds are not code-signed yet, so SmartScreen may show "Windows
 protected your PC". Choose **More info**, then **Run anyway**. Signing is on
@@ -207,7 +211,8 @@ Zephium downloads updates in the background and installs them when you choose
 
 ## What's next
 
-- Linux and Intel Macs.
+- Full Work parity on Linux, plus Linux extensions and downloads.
+- Intel Macs.
 - Code-signed Windows builds.
 - More extensions verified to work, and native extensions built into Zephium.
 - And much more.
@@ -221,8 +226,9 @@ Prerequisites:
 - Node.js, at the version in [`.node-version`](.node-version).
 - pnpm, through Corepack: `corepack enable`.
 - The [Tauri prerequisites](https://v2.tauri.app/start/prerequisites/) for your
-  platform: Xcode Command Line Tools on macOS, or the Microsoft C++ Build Tools
-  and WebView2 on Windows.
+  platform: Xcode Command Line Tools on macOS, the Microsoft C++ Build Tools
+  and WebView2 on Windows, or GTK 3 + WebKitGTK 4.1 development packages on
+  Linux (see [docs/linux.md](docs/linux.md)).
 
 ```sh
 git clone https://github.com/zephium-browser/Zephium.git
@@ -232,7 +238,8 @@ pnpm dev
 ```
 
 Development builds use their own `app.zephium.dev` profile, so they do not
-touch the data of an installed Zephium. Linux is not supported yet. See
+touch the data of an installed Zephium. On Linux the browser builds the
+Browse surface without the Work composition. See
 [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
 
 ## Architecture

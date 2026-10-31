@@ -3133,10 +3133,12 @@ UI presentation can evolve without changing the native admission boundary.
 
 ## 13. Platform layer
 
-Linux is not a supported platform at launch: `run()` in `desktop/src/lib.rs`
-prints that Zephium isn't available on Linux yet and exits 1. The Linux code
-stays in the tree and CI keeps it compiling, but no Linux build ships. Native
-code is written against the OS it runs on; no blind ports. CI keeps all
+This fork enables the Linux desktop build: `run()` no longer exits on Linux,
+the platform overlay selects the Browse product, and the Linux workflow
+packages a `.deb` and portable archive. The Linux code is the in-tree GTK/
+WebKitGTK adapter documented below; Work, extensions and downloads remain
+out of the Linux build for now. See [linux.md](linux.md) for the supported
+surface and the runtime floor. Native code is written against the OS it runs on; no blind ports. CI keeps all
 targets compiling (§14). The current source-level/native checks do not replace the
 packaged hostile-page and endurance matrix still required on real machines.
 

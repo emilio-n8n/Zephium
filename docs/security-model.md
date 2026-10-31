@@ -252,10 +252,9 @@ Any change that breaks one of these invariants must fail review and release:
    pass after the exact document reaches load completion. Rust accepts only an exact,
    canonical 32-by-32 RGBA raster for the current navigation epoch and origin; chrome
    paints that fixed raster without parsing a page-controlled image container.
-10. Linux is not a supported platform at launch: `run()` in `desktop/src/lib.rs` prints
-    that Zephium isn't available on Linux yet and exits with status 1 before any
-    runtime is touched. The Linux engine code stays in the tree and keeps the
-    admission described here, but none of it is exercised by a shipped build. On
+10. This fork enables Linux Browse: `run()` no longer exits early, and the Linux
+    workflow packages the app. The Linux engine admission described here is
+    therefore exercised by a shipped build for the first time. On
     Linux, browsing requires WebKitGTK 2.54.0 or newer. Older builds,
     odd-minor development builds, and unrelated major lines fail closed. A
     newer stable even-minor WebKitGTK 2.x line is admitted with a visible
@@ -1577,13 +1576,12 @@ These inherited properties must not be overstated:
   process swapping reduces process reuse but is not WebKit full site isolation, does not
   promise a process per origin/frame, and remains engine-controlled. Other WebContext
   callbacks are context-global and require explicit single-owner lifetime management.
-- No Linux package is built or published: the release workflow produces macOS and
-  Windows installers only, and CI compiles and tests the Linux code on Ubuntu as a
-  source gate. The earlier Fedora RPM path and its real-WebProcess confinement CI
-  were removed with Linux support, so nothing here is runtime sandbox attestation.
-  A future Linux release must restore a package that carries a
-  `webkit2gtk4.1 >= 2.54.0` dependency, with runtime admission as the final gate, and
-  re-establish confinement evidence.
+- The Linux `.deb` and portable archive are built by this fork's
+  `.github/workflows/linux.yml`; upstream's release workflow still produces
+  macOS and Windows installers only. The packages carry a
+  `libwebkit2gtk-4.1-0 (>= 2.54.0)` dependency, with runtime admission as the
+  final gate. The packaged confinement evidence described below remains
+  outstanding, so this fork does not claim runtime sandbox attestation.
 - **Release gates:** rerun the confinement probe through the packaged application on
   supported hosts and inspect its actual process tree. Add an in-renderer or
   equivalent-credential host-file denial probe and identify the filter policy before
