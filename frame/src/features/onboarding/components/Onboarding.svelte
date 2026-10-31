@@ -43,8 +43,15 @@
   let leaving = $state(false);
   let notice = $state<string | null>(null);
 
-  let width = $state(0);
-  let height = $state(0);
+  let clientWidth = $state(0);
+  let clientHeight = $state(0);
+  let viewportWidth = $state(0);
+  let viewportHeight = $state(0);
+  // GTK can leave the WebKit viewport at zero while the window is hidden and
+  // not send a resize on reveal. The window's own inner size is the fallback
+  // that lets the first frame measure itself.
+  let width = $derived(clientWidth || viewportWidth);
+  let height = $derived(clientHeight || viewportHeight);
   let fit = $derived(width && height ? Math.min(width / STAGE.width, height / STAGE.height) : 1);
   // The window's whole view, in stage pixels: the stage is centred in it.
   let view = $derived({ width: width / fit, height: height / fit });
@@ -53,7 +60,13 @@
   $effect(() => {
     if (placed || !width || !height) return;
     const next = requestAnimationFrame(() => (placed = true));
-    return () => cancelAnimationFrame(next);
+    // A hidden GTK window can suspend frames; a timer still lets the first
+    // scene place itself once the reveal has happened.
+    const fallback = setTimeout(() => (placed = true), 700);
+    return () => {
+      cancelAnimationFrame(next);
+      clearTimeout(fallback);
+    };
   });
   let sky = $derived(scene());
 
@@ -207,6 +220,20 @@
     void browserImport.detect();
     return () => clearTimeout(noticeTimer);
   });
+
+  onMount(() => {
+    const measure = () => {
+      viewportWidth = window.innerWidth;
+      viewportHeight = window.innerHeight;
+    };
+    measure();
+    const frame = requestAnimationFrame(measure);
+    window.addEventListener("resize", measure);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("resize", measure);
+    };
+  });
 </script>
 
 <svelte:window onkeydown={keydown} />
@@ -220,8 +247,8 @@
   data-phase={phase}
   data-leaving={leaving}
   data-sky={sky}
-  bind:clientWidth={width}
-  bind:clientHeight={height}
+  bind:clientWidth={clientWidth}
+  bind:clientHeight={clientHeight}
 >
   <div class="ground" data-tauri-drag-region></div>
 
