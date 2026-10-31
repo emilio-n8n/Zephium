@@ -196,7 +196,7 @@ Edge.
 | -------- | ------------ | --------- | -------- |
 | macOS | Apple Silicon | [`Zephium-macOS-arm64.dmg`](https://github.com/zephium-browser/Zephium/releases/latest/download/Zephium-macOS-arm64.dmg) | macOS Sonoma 14 or later |
 | Windows | x64 | [`Zephium-Windows-x64-setup.exe`](https://github.com/zephium-browser/Zephium/releases/latest/download/Zephium-Windows-x64-setup.exe) | Windows 10 or 11 |
-| Linux (this fork) | x64 | `.deb` and portable `.tar.gz` from the [Linux workflow](.github/workflows/linux.yml) | WebKitGTK 4.1 2.54 or later |
+| Linux (this fork) | x64 | [`.deb` / portable `.tar.gz`](https://github.com/emilio-n8n/Zephium/releases/tag/linux-build-1) | WebKitGTK 4.1 2.54 or later |
 
 Linux Browse is enabled on this branch; see [docs/linux.md](docs/linux.md)
 for the package layout, feature matrix and build steps.

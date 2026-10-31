@@ -9,6 +9,9 @@ Chrome extensions, downloads and file uploads are not part of this first
 port; the shared command surface returns their normal `Unavailable` answers
 and the UI hides or refuses them.
 
+Download the current packages from the
+[Linux release](https://github.com/emilio-n8n/Zephium/releases/tag/linux-build-1).
+
 ## Requirements
 
 - x86_64 Linux with GTK 3.24 and WebKitGTK 4.1 **2.54.0 or newer**.
