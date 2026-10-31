@@ -76,15 +76,20 @@
           new Promise((resolve) => setTimeout(resolve, 1500)),
         ]);
         if (disposed) return;
-        ready = true;
-        await tick();
-        // A hidden native window can suspend animation frames indefinitely.
-        // Resolve style/layout synchronously before admitting native reveal.
-        void document.documentElement.getBoundingClientRect();
-        void getComputedStyle(document.body).backgroundColor;
+        // Reveal the native window before mounting the onboarding scene. A
+        // GTK window that has never been shown gives WebKit a zero-sized
+        // viewport, so the stage's measurements and animation frames would
+        // never start and the first run would stay on an empty ground.
         if (!(await commands.uiReady())) {
           throw new Error("native startup gate rejected UI");
         }
+        if (disposed) return;
+        ready = true;
+        await tick();
+        // Resolve style/layout synchronously once the window has an
+        // allocation, then let the scene's first frame begin.
+        void document.documentElement.getBoundingClientRect();
+        void getComputedStyle(document.body).backgroundColor;
         motion.reveal();
       } catch {
         console.error("trusted onboarding initialization failed");

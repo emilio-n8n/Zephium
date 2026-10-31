@@ -1,8 +1,5 @@
 {
   "productName": "app.zephium",
-  "build": {
-    "features": []
-  },
   "app": {
     "enableGTKAppId": true,
     "windows": [
@@ -22,7 +19,11 @@
   "bundle": {
     "linux": {
       "deb": {
-        "desktopTemplate": "linux/zephium.desktop.hbs"
+        "desktopTemplate": "linux/zephium.desktop.hbs",
+        "depends": [
+          "libgtk-3-0",
+          "libwebkit2gtk-4.1-0 (>= 2.54.0)"
+        ]
       },
       "rpm": {
         "desktopTemplate": "linux/zephium.desktop.hbs"
