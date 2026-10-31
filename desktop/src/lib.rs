@@ -5195,6 +5195,20 @@ fn onboarding_first(store: &SqliteStore) -> bool {
     if std::env::var("ZEPHIUM_ONBOARDING").as_deref() == Ok("1") {
         return true;
     }
+    // The GTK/WebKitGTK onboarding scene has not been validated yet: its
+    // first frame depends on a window reveal and animation frames that a
+    // hidden GTK surface does not provide reliably. A Linux first run opens
+    // Browse directly instead of an empty ground; record the choice so the
+    // verdict is stable. Debug builds can still opt in with
+    // ZEPHIUM_ONBOARDING=1.
+    #[cfg(target_os = "linux")]
+    {
+        if zephium_app::onboarding_due(store) {
+            let _ = store.set_app_setting("onboarding".into(), "done".into());
+        }
+        return false;
+    }
+    #[cfg(not(target_os = "linux"))]
     zephium_app::onboarding_due(store)
 }
 

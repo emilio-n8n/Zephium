@@ -9,3 +9,5 @@
 const userAgent = navigator.userAgent;
 export const IS_MAC = userAgent.includes("Mac");
 export const IS_WINDOWS = userAgent.includes("Windows");
+/** Linux currently ships Browse only; Work has no native adapter yet. */
+export const IS_LINUX = !IS_MAC && !IS_WINDOWS;

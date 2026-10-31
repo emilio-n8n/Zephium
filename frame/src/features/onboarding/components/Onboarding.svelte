@@ -9,7 +9,7 @@
   import Button from "$shared/ui/Button";
   import Icon from "$shared/ui/Icon";
   import KeyHint from "$shared/ui/KeyHint";
-  import { IS_MAC } from "$shared/platform";
+  import { IS_LINUX, IS_MAC } from "$shared/platform";
   import { reducedMotion } from "$shared/lib/motion";
   import { WORDMARK } from "$shared/lib/wordmark";
   import * as motion from "$session/motion.svelte";
@@ -102,7 +102,7 @@
     step === "welcome" || step === "import" || step === "ai" || step === "ready",
   );
   // Work and its models are offered only while Work and AI are on.
-  let ai = $derived(preferences.aiEnabled());
+  let ai = $derived(preferences.aiEnabled() && !IS_LINUX);
   let place = $derived(position(step, ai));
 
   // The name forms once the window is actually on screen and its sky in

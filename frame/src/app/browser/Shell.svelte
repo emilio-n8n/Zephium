@@ -67,7 +67,7 @@
     SidebarNotice,
     UtilityTray,
   } from "$features/sidebar";
-  import { IS_WINDOWS } from "$shared/platform";
+  import { IS_LINUX, IS_WINDOWS } from "$shared/platform";
   import { installChromeMenu } from "$shared/lib/chrome-menu";
   import { tabs } from "$domain/tabs";
   import { preferences } from "$domain/preferences";
@@ -353,7 +353,7 @@
           <div class="rail-search"><SidebarSearch /></div>
         {:else if paneled}<ModeTabs compact standalone />{/if}
       {:else if compact}<AddressField {compact} /><StoreInstallRail />
-      {:else if !incognito && preferences.enabled("work")}<div class="sidebar-head">
+      {:else if !incognito && !IS_LINUX && preferences.enabled("work")}<div class="sidebar-head">
           <ModeTabs />
         </div>{/if}
       <!-- One column in both environments: only what it lists changes, and the

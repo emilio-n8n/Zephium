@@ -4,6 +4,7 @@
   import { surface } from "$domain/surface";
   import { preferences } from "$domain/preferences";
   import SegmentedControl from "$shared/ui/SegmentedControl";
+  import { IS_LINUX } from "$shared/platform";
   import ModeWord from "./ModeWord.svelte";
 
   let {
@@ -29,7 +30,7 @@
   request, so the thumb only travels once the environment has actually
   changed and can never be left on a side native refused.
 -->
-{#if !preferences.enabled("work")}{:else if compact}<ModeWord {standalone} />{:else}<div
+{#if IS_LINUX || !preferences.enabled("work")}{:else if compact}<ModeWord {standalone} />{:else}<div
     class="modes"
   >
     <SegmentedControl

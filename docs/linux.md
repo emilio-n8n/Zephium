@@ -83,14 +83,10 @@ Development uses the same platform split:
 pnpm dev
 ```
 
-The first run opens onboarding. If the window stays on an empty ground, the
-build predates the Linux onboarding fix; the browser itself is still reached
-by marking onboarding as done in the profile store:
-
-```sh
-sqlite3 ~/.local/share/app.zephium/meta.sqlite \
-  "update settings set value='done' where key='onboarding';"
-```
+The first run opens Browse directly on Linux. The GTK/WebKitGTK onboarding
+scene is not yet validated on a hidden GTK surface, so the port records
+onboarding as finished instead of presenting an empty ground. Debug builds
+can still open it with `ZEPHIUM_ONBOARDING=1 pnpm dev`.
 
 ## Verification
 

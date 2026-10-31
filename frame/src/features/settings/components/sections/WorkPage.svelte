@@ -9,11 +9,13 @@
   import WorkWebsiteData from "../WorkWebsiteData.svelte";
   import WorkScreenshotSites from "../WorkScreenshotSites.svelte";
   import * as settings from "../../lib/settings-state.svelte";
+  import { IS_LINUX } from "$shared/platform";
   let profile = $derived(tabs.profile());
   let regular = $derived(!!profile && profile.kind !== "incognito");
 </script>
 
-<FeatureSwitch feature="work" card />
+{#if !IS_LINUX}
+  <FeatureSwitch feature="work" card />
 {#if preferences.enabled("work") && preferences.aiEnabled()}
   <SettingsGroup title={m.settings_work_privacy()}>
     <SettingsRow
@@ -41,6 +43,9 @@
       >{m.work_ai_off_action()}</button
     >
   </p>{/if}
+{:else}
+  <p class="work-note">Work is not available on Linux in this build.</p>
+{/if}
 
 <style>
   .link {

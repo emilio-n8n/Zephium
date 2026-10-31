@@ -16,7 +16,7 @@
   import NoticePip from "./NoticePip.svelte";
   import { keymap } from "$domain/keymap";
   import { acceleratorKeys } from "$shared/lib/accelerator";
-  import { IS_MAC } from "$shared/platform";
+  import { IS_LINUX, IS_MAC } from "$shared/platform";
 
   let { compact = false }: { compact?: boolean } = $props();
   onMount(() => {
@@ -33,7 +33,7 @@
   const foot = accountFoot({ private: () => privately });
   // A tool whose feature is off is not offered here either.
   const shelf = $derived<ToolKind[]>([
-    ...(preferences.aiEnabled() && !privately ? [ASK_TOOL] : []),
+    ...(preferences.aiEnabled() && !IS_LINUX && !privately ? [ASK_TOOL] : []),
     ...SHELF_TOOLS.filter((kind) => preferences.enabled(kind)),
   ]);
   const groups = $derived([shelf, RECORD_TOOLS].filter((group) => group.length > 0));
