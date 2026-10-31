@@ -1,4 +1,7 @@
 {
+  "build": {
+    "features": ["work-product"]
+  },
   "app": {
     "windows": [
       {

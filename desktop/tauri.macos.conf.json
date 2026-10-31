@@ -1,4 +1,7 @@
 {
+  "build": {
+    "features": ["work-product", "macos-page-permission-prompts"]
+  },
   "bundle": {
     "macOS": {
       "entitlements": "Entitlements.plist",

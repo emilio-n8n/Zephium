@@ -6,7 +6,10 @@ edition.workspace = true
 license.workspace = true
 
 [features]
-default = ["work-product", "macos-page-permission-prompts"]
+# The platform overlays select the product features: macOS and Windows enable
+# Work through `build.features`, and Linux ships Browse without the Work
+# composition (which requires macOS or Windows native adapters).
+default = []
 # Dormant until an explicit Work intent. Native adapters are target-specific;
 # durable contracts and orchestration also compile on Windows.
 work-product = [

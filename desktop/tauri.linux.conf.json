@@ -1,5 +1,8 @@
 {
   "productName": "app.zephium",
+  "build": {
+    "features": []
+  },
   "app": {
     "enableGTKAppId": true,
     "windows": [
